@@ -1110,7 +1110,7 @@ class Transaccion extends Controllers{
 			// Estructura: CR.I/REC + espacio + codigo + espacio + [V/J/E] + [0/00] + cedula
 			// Ejemplo: CR.I/REC 0105 V010762773
 			
-			$patron = '/^CR\.I\/REC\s+\d+\s+([VJE])0*(\d+)$/';
+			$patron = '/^CR\.I\/REC\s+\d+\s+([VJER])0*(\d+)$/';
 			if (preg_match($patron, $descripcion, $matches)) {
 				$tipoPersona = $matches[1]; // V, J o E
 				$cedula = $matches[2];      // cedula (ej: 10762773)
