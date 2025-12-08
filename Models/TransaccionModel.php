@@ -581,7 +581,7 @@
 		// Crear hash único basado en los datos del movimiento específico
 		$userId = $_SESSION['idUser'] ?? 0;
 		$id_enterprise = $_SESSION['userData']['id_enterprise'] ?? 0;
-		
+		$movimiento['referencia'] = trim($movimiento['referencia']);
 		// Crear hash basado en fecha, referencia y monto del movimiento
 		$movimientoKey = $movimiento['fecha'] . '_' . $movimiento['referencia'] . '_' . $movimiento['monto'];
 		$movimientoHash = md5($movimientoKey);
@@ -592,6 +592,7 @@
 		
 		// Agregar sufijo para diferenciar duplicados
 		// Formato: idBase + sufijo (ej: 123456789 + 1 = 1234567891)
+
 		return intval($idBase . $sufijo);
 	}
 
@@ -628,11 +629,10 @@
 			$fechaMovimiento = DateTime::createFromFormat('Y-m-d', $mov['fecha']);
 			$anioMov = (int)$fechaMovimiento->format('Y');
 			$mesMov = (int)$fechaMovimiento->format('m');
-			
+
 			$limpioreference = preg_replace('/\s+/', '', $mov['referencia']);
 			
 			if ($anioMov == $anio && $mesMov == $mes) {
-				
 				// Crear clave única para identificar movimientos duplicados
 				$claveMovimiento = $mov['fecha'] . '|' . $limpioreference . '|' . $mov['monto'];
 				
@@ -642,11 +642,12 @@
 				} else {
 					$contadorDuplicados[$claveMovimiento]++;
 				}
-				
+			
 				// Generar ID único con sufijo incremental para duplicados
 				$sufijo = $contadorDuplicados[$claveMovimiento];
+
 				$idInsert = $this->generateIdInsert($anio, $mes, $banco, $mov, $sufijo);
-				
+
 				// Escapar valores para evitar SQL injection usando addslashes
 				$escapedBank = "'" . addslashes($limpioNameBank) . "'";
 				$escapedAccount = "'" . addslashes($limpioAccount) . "'";
@@ -663,6 +664,7 @@
 
 		// Ejecutar insert masivo solo si hay datos para insertar
 		if (!empty($valuesRows)) {
+
 			// Construir consulta SQL completa con valores directos
 			$sqlInsert = "INSERT IGNORE INTO $table (bank, account, reference, `date`, amount, responsible, id_insert) VALUES " . implode(',', $valuesRows);
 			$request = $this->insert_massive($sqlInsert);
