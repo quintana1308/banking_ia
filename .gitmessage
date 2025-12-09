@@ -1,0 +1,30 @@
+# <tipo>(ámbito): <descripción>
+#
+# Tipos válidos:
+# feat:     Nueva funcionalidad
+# fix:      Corrección de bug
+# docs:     Cambios en documentación
+# style:    Cambios de formato (espacios, punto y coma, etc.)
+# refactor: Refactorización de código
+# test:     Agregar o modificar tests
+# chore:    Tareas de mantenimiento
+#
+# Ámbitos sugeridos:
+# auth, transaction, bank, user, dashboard, api, db, config
+#
+# Ejemplos:
+# feat(auth): add Google login integration
+# fix(transaction): resolve amount calculation error
+# docs(readme): update installation instructions
+# style(css): format sidebar styles
+# refactor(model): optimize database queries
+# test(unit): add tests for user validation
+# chore(deps): update package dependencies
+#
+# Cuerpo del mensaje (opcional):
+# Explicar el QUÉ y POR QUÉ, no el CÓMO
+#
+# Pie del mensaje (opcional):
+# Fixes #123
+# Closes #456
+# BREAKING CHANGE: descripción del cambio incompatible
