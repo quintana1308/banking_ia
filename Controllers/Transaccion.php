@@ -1109,7 +1109,7 @@ class Transaccion extends Controllers{
 		if (strpos($descripcion, 'CR.I/REC') === 0) {
 			// Estructura: CR.I/REC + espacio + codigo + espacio + [V/J/E] + [0/00] + cedula
 			// Ejemplo: CR.I/REC 0105 V010762773
-			
+			// Texto prueba
 			$patron = '/^CR\.I\/REC\s+\d+\s+([VJER])0*(\d+)$/';
 			if (preg_match($patron, $descripcion, $matches)) {
 				$tipoPersona = $matches[1]; // V, J o E
