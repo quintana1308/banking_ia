@@ -1,0 +1,26 @@
+#!/bin/sh
+# Hook para validar mensajes de commit según Conventional Commits
+# Instalar con: git config core.hooksPath .githooks
+
+commit_regex='^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?: .{1,50}'
+
+error_msg="❌ Mensaje de commit inválido!
+
+Formato requerido: <tipo>(ámbito): <descripción>
+
+Tipos válidos: feat, fix, docs, style, refactor, test, chore
+
+Ejemplos válidos:
+  feat(auth): add Google login integration
+  fix(transaction): resolve amount calculation error
+  docs(readme): update installation instructions
+
+Tu mensaje: $(cat $1)"
+
+if ! grep -qE "$commit_regex" "$1"; then
+    echo "$error_msg" >&2
+    exit 1
+fi
+
+echo "✅ Mensaje de commit válido"
+exit 0
