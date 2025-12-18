@@ -1988,6 +1988,9 @@ class Transaccion extends Controllers{
 				}else if(count($fila) == 6){
 					$result = $this->processMercantilExcel3($rows);
 					return $result;
+				}else if(count($fila) == 5){
+					$result = $this->processMercantilExcel4($rows);
+					return $result;
 				}else{
 					$result = $this->processMercantilExcel2($rows);
 					return $result;
@@ -2105,6 +2108,35 @@ class Transaccion extends Controllers{
 			
 			$totalMovimientos++;
 		}
+		return [
+				'total' => $totalMovimientos,
+				'mov' => $movimientos_transformados
+				];
+	}
+
+	//PROCESO DE BANCO MERCANTIL CASO 4 (EXCEL)
+	private function processMercantilExcel4($rows)
+	{	
+
+		$movimientos_transformados = [];
+		$totalMovimientos = 0;	
+		// Asume que la primera fila son los encabezados
+		for ($i = 9; $i < count($rows); $i++) {
+			$fila = $rows[$i];
+
+			$fecha = DateTime::createFromFormat('m/d/Y', $fila[1])->format('Y-m-d');
+
+			$amount = $this->parseEuropeanNumber($fila[4]);
+
+			$movimientos_transformados[] = [
+				'fecha'      => $fecha,  // Ej: "2024-01-01"
+				'referencia' => $fila[2],  // Ej: "123456"
+				'monto'      => $amount,  // Ej: "100.00"
+			];
+			
+			$totalMovimientos++;
+		}
+		
 		return [
 				'total' => $totalMovimientos,
 				'mov' => $movimientos_transformados
