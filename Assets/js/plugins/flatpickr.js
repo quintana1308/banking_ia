@@ -42,7 +42,7 @@ Array.from(specificdisable, (elem) => {
   if(typeof flatpickr !== typeof undefined) {
     flatpickr(elem ,
       {
-        disable: ["2025-01-30", "2025-02-21", "2025-03-08", new Date(2025, 4, 9) ],
+        disable: ["2026-01-30", "2026-02-21", "2026-03-08", new Date(2026, 4, 9) ],
         dateFormat: "Y-m-d",
     }
   )
@@ -54,7 +54,7 @@ const disableexcept = document.querySelectorAll('.flatpickr_disableexcept')
 Array.from(disableexcept, (elem) => {
   if(typeof flatpickr !== typeof undefined) {
     flatpickr(elem , {
-      enable: ["2025-03-30", "2025-05-21", "2025-06-08", new Date(2025, 8, 9) ]
+      enable: ["2026-03-30", "2026-05-21", "2026-06-08", new Date(2026, 8, 9) ]
   }
       
   )

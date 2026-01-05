@@ -116,7 +116,7 @@
                 "guzzlehttp/psr7": "^2.4",
                 "psr/http-message": "^2.0"
             },
-            "time": "2025-01-27T12:07:53+00:00",
+            "time": "2026-01-27T12:07:53+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -335,7 +335,7 @@
                 "mpdf/mpdf": "Option for rendering PDF with PDF Writer",
                 "tecnickcom/tcpdf": "Option for rendering PDF with PDF Writer"
             },
-            "time": "2025-05-26T18:51:08+00:00",
+            "time": "2026-05-26T18:51:08+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {

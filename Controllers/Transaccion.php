@@ -314,7 +314,7 @@ class Transaccion extends Controllers{
 	public function newTransaction()
 	{	
 		$data['page_functions_js'] = "functions_transaction.js";
-		$data['years'] = range(2022, 2025);
+		$data['years'] = range(2022, 2026);
 		$data['months'] = [
 			'Enero', 'Febrero', 'Marzo', 'Abril',
 			'Mayo', 'Junio', 'Julio', 'Agosto',
