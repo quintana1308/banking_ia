@@ -1702,7 +1702,6 @@ class Transaccion extends Controllers{
 	//PROCESO DE BANCO VENEZUELA (EXCEL)
 	private function procesarExcelVenezuela($filePath)
 	{
-
 		try {
 			$spreadsheet = IOFactory::load($filePath);
 			$sheet = $spreadsheet->getActiveSheet();
@@ -1717,6 +1716,9 @@ class Transaccion extends Controllers{
 					return $result;
 				}else if (count($fila) == 8){
 					$result = $this->procesarExcelVenezuela1($filePath);
+					return $result;
+				}else if (count($fila) == 16){
+					$result = $this->procesarExcelVenezuela5($filePath);
 					return $result;
 				}else{
 					$result = $this->procesarExcelVenezuela4($filePath);
@@ -1896,6 +1898,60 @@ class Transaccion extends Controllers{
 				$movimientos_transformados[] = [
 					'fecha'      => $fecha, // Ej: "2024-01-01"
 					'referencia' => $fila[1], // Ej: "123456"
+					'monto'      => $amount, // Ej: "100.00"
+				];
+				
+				$totalMovimientos++;
+			}
+
+			return [
+				'total' => $totalMovimientos,
+				'mov' => $movimientos_transformados
+				];
+
+		} catch (Exception $e) {
+			if (file_exists($filePath)) unlink($filePath);
+			echo json_encode([
+				'success' => false,
+				'msg' => 'Archivo Excel esta dañado y/o absoleto.'
+			]);
+			die();
+		}
+	}
+
+	private function procesarExcelVenezuela5($filePath){
+		
+		try {
+			$spreadsheet = IOFactory::load($filePath);
+			$sheet = $spreadsheet->getActiveSheet();
+			$rows = $sheet->toArray();
+
+			$movimientos_transformados = [];
+			$totalMovimientos = 0;
+
+			// Asume que la primera fila son los encabezados
+			for ($i = 6; $i < count($rows); $i++) {
+				$fila = $rows[$i];
+				
+				if($fila[0] == 'SALDO INICIAL' || $fila[0] == '' || $fila[0] == 'Saldo inicial' || $fila[0] == 'Intereses pagados' || $fila[0] == 'Referencia'){
+					continue;
+				}
+				if($fila[4] == ''){
+					continue;
+				}
+
+				$fecha = DateTime::createFromFormat('d/m/Y', $fila[4])->format('Y-m-d');
+
+				if($fila[7] == 'NC'){
+					$amount = $this->parseEuropeanNumber($fila[11]);
+				}else{
+					$amount = $this->parseEuropeanNumber($fila[9]);
+				}
+
+				// Ajusta los índices [0], [1], [2] según el orden de tus columnas
+				$movimientos_transformados[] = [
+					'fecha'      => $fecha, // Ej: "2024-01-01"
+					'referencia' => $fila[0], // Ej: "123456"
 					'monto'      => $amount, // Ej: "100.00"
 				];
 				
