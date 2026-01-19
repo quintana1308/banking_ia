@@ -2037,7 +2037,10 @@ class Transaccion extends Controllers{
 			$sheet = $spreadsheet->getActiveSheet();
 			$rows = $sheet->toArray();
 
+
+
 			foreach ($rows as $fila) {
+
 				if (count($fila) > 20) {
 					$result = $this->processMercantilExcel1($rows);
 					return $result;
@@ -2180,7 +2183,7 @@ class Transaccion extends Controllers{
 		for ($i = 9; $i < count($rows); $i++) {
 			$fila = $rows[$i];
 
-			$fecha = DateTime::createFromFormat('m/d/Y', $fila[1])->format('Y-m-d');
+			$fecha = DateTime::createFromFormat('d/m/Y', $fila[1])->format('Y-m-d');
 
 			$amount = $this->parseEuropeanNumber($fila[4]);
 
@@ -2192,6 +2195,9 @@ class Transaccion extends Controllers{
 			
 			$totalMovimientos++;
 		}
+
+		dep($movimientos_transformados);
+		exit;
 		
 		return [
 				'total' => $totalMovimientos,
